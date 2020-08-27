@@ -1,0 +1,12 @@
+2020/08/26 16:24:46 {"callers":["D:/GoProjects/src/CloudDisk/main.go: 46 main.init.0"],"level":"error","message":"svc.CheckAuth err: auth info does not exist","time":1598430286239186700}
+2020/08/26 16:26:27 {"callers":["D:/GoProjects/src/CloudDisk/main.go: 46 main.init.0"],"level":"error","message":"svc.CheckAuth err: auth info does not exist","time":1598430387748985100}
+2020/08/26 16:26:29 {"callers":["D:/GoProjects/src/CloudDisk/main.go: 46 main.init.0"],"level":"error","message":"svc.CheckAuth err: auth info does not exist","time":1598430389481190500}
+2020/08/26 16:54:06 {"callers":["D:/GoProjects/src/CloudDisk/main.go: 46 main.init.0"],"level":"error","message":"svc.UploadFile err: file suffix is not supported","time":1598432046626955000}
+2020/08/26 16:55:05 {"callers":["D:/GoProjects/src/CloudDisk/main.go: 46 main.init.0"],"level":"error","message":"svc.UploadFile err: file suffix is not supported","time":1598432105746224100}
+2020/08/26 16:57:52 {"callers":["D:/GoProjects/src/CloudDisk/main.go: 46 main.init.0"],"level":"error","message":"svc.UploadFile err: exceeded maximum file limit","time":1598432272323946600}
+2020/08/26 16:59:04 {"callers":["D:/GoProjects/src/CloudDisk/main.go: 46 main.init.0"],"level":"error","message":"app.CreateTag errs: Error 1146: Table 'dome7.blog_file' doesn't exist","time":1598432344951222900}
+2020/08/26 17:07:39 {"callers":["D:/GoProjects/src/CloudDisk/main.go: 46 main.init.0"],"level":"error","message":"svc.UploadFile err: exceeded maximum file limit","time":1598432859017776400}
+2020/08/26 17:08:06 {"callers":["D:/GoProjects/src/CloudDisk/main.go: 46 main.init.0"],"level":"error","message":"svc.UploadFile err: exceeded maximum file limit","time":1598432886189500700}
+2020/08/26 17:14:39 {"callers":["D:/GoProjects/src/CloudDisk/main.go: 46 main.init.0"],"level":"error","message":"app.CreateTag errs: this file is exist","time":1598433279322904500}
+2020/08/26 17:26:30 {"callers":["D:/GoProjects/src/CloudDisk/main.go: 46 main.init.0"],"level":"error","message":"app.CreateTag errs: this file is exist","time":1598433990952510900}
+2020/08/27 20:26:11 {"callers":["D:/GoProjects/src/CloudDisk/main.go: 46 main.init.0"],"level":"error","message":"app.BindAndValid errs: CreatedBy为必填字段","time":1598531171492806800}

@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <!-- Le styles -->
+    <link href="https://www.bootcss.com/p/layoutit/css/bootstrap-combined.min.css" rel="stylesheet">
+    <link href="https://www.bootcss.com/p/layoutit/css/layoutit.css" rel="stylesheet">
+
+    <script type="text/javascript" src="https://www.bootcss.com/p/layoutit/js/jquery-2.0.0.min.js"></script>
+    <script type="text/javascript" src="https://www.bootcss.com/p/layoutit/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://www.bootcss.com/p/layoutit/js/jquery-ui.js"></script>
+    <script type="text/javascript" src="https://www.bootcss.com/p/layoutit/js/jquery.ui.touch-punch.min.js"></script>
+    <script type="text/javascript" src="https://www.bootcss.com/p/layoutit/js/jquery.htmlClean.js"></script>
+    <script type="text/javascript" src="https://www.bootcss.com/p/layoutit/ckeditor/ckeditor.js"></script>
+    <script type="text/javascript" src="https://www.bootcss.com/p/layoutit/ckeditor/config.js"></script>
+    <script type="text/javascript" src="https://www.bootcss.com/p/layoutit/js/scripts.js"></script>
+    <title>CloudDisk</title>
+</head>
+
+<style type="text/css">
+    body
+    {
+        background-image:url('img/39rz.png');
+        background-repeat:repeat-x;
+        background-size:cover;
+    }
+    .img-circle{
+        position:relative;
+        animation: mymove 4s;
+        animation-iteration-count: infinite;
+    }
+    @keyframes mymove{
+        0% {transform:translate(0px,0)}
+        50% {transform:translate(0px,6px)}
+        100% {transform:translate(0px,0)}
+    }
+    .data{
+        position:absolute;
+        color:#fff;
+        font-size:40px;
+        font-weight:400;
+        float:right;
+        z-index:1;
+        top:41%;
+        left:77%
+    }
+    .data:before{
+        position:absolute;
+        float:right;
+        z-index:2;
+        top:0;
+        left:50%;
+        transform:translateX(-49.5%);
+        clip:rect(0,4000px,0,0);
+        animation:flash1 2s linear infinite alternate-reverse;
+        text-shadow:-1px 0 rgba(0,0,255,.5);
+        content:attr(data-text)
+    }
+    @keyframes flash1{
+        0%{clip:rect(56px 4000px 6px 0)}
+        5%{clip:rect(74px 4000px 15px 0)}
+        10%{clip:rect(44px 4000px 27px 0)}
+        15%{clip:rect(19px 4000px 30px 0)}
+        20%{clip:rect(73px 4000px 13px 0)}
+        25%{clip:rect(63px 4000px 33px 0)}
+        30%{clip:rect(50px 4000px 42px 0)}
+        35%{clip:rect(20px 4000px 11px 0)}
+        40%{clip:rect(71px 4000px 3px 0)}
+        45%{clip:rect(28px 4000px 21px 0)}
+        50%{clip:rect(87px 4000px 11px 0)}
+        55%{clip:rect(11px 4000px 40px 0)}
+        60%{clip:rect(37px 4000px 38px 0)}
+        65%{clip:rect(53px 4000px 41px 0)}
+        70%{clip:rect(5px 4000px 10px 0)}
+        75%{clip:rect(63px 4000px 43px 0)}
+        80%{clip:rect(30px 4000px 29px 0)}
+        85%{clip:rect(22px 4000px 27px 0)}
+        90%{clip:rect(9px 4000px 47px 0)}
+        95%{clip:rect(70px 4000px 32px 0)}
+        to{clip:rect(4px 4000px 29px 0)}
+    }
+    .data:after{
+        position:absolute;
+        float:right;
+        z-index:3;
+        top:0;
+        left:50%;
+        transform:translateX(-50.5%);
+        clip:rect(0,4000px,0,0);
+        animation:flash 2s linear infinite alternate-reverse;
+        text-shadow:-1px 0 rgba(255,0,0,.5);
+        content:attr(data-text)
+    }
+    @keyframes flash{
+        0%{clip:rect(71px 4000px 10px 0)}
+        5%{clip:rect(87px 4000px 39px 0)}
+        10%{clip:rect(91px 4000px 49px 0)}
+        15%{clip:rect(89px 4000px 21px 0)}
+        20%{clip:rect(46px 4000px 46px 0)}
+        25%{clip:rect(63px 4000px 14px 0)}
+        30%{clip:rect(32px 4000px 6px 0)}
+        35%{clip:rect(39px 4000px 11px 0)}
+        40%{clip:rect(47px 4000px 4px 0)}
+        45%{clip:rect(33px 4000px 25px 0)}
+        50%{clip:rect(35px 4000px 33px 0)}
+        55%{clip:rect(11px 4000px 28px 0)}
+        60%{clip:rect(14px 4000px 35px 0)}
+        65%{clip:rect(8px 4000px 46px 0)}
+        70%{clip:rect(34px 4000px 49px 0)}
+        75%{clip:rect(55px 4000px 18px 0)}
+        80%{clip:rect(87px 4000px 1px 0)}
+        85%{clip:rect(78px 4000px 25px 0)}
+        90%{clip:rect(61px 4000px 45px 0)}
+        95%{clip:rect(52px 4000px 12px 0)}
+        to{clip:rect(45px 4000px 29px 0)}
+    }
+</style>
+
+<body>
+
+<div class="container-fluid">
+    <div class="row-fluid">
+        <div class="span8">
+            <div class="tabbable" id="tabs-721605">
+                <ul class="nav nav-tabs">
+                    <li>
+                        <a data-toggle="tab" href="#panel-664205">下载中</a>
+                    </li>
+                    <li class="active">
+                        <a data-toggle="tab" href="#panel-92935">已完成</a>
+                    </li>
+                </ul>
+                <div class="tab-content">
+                    <div class="tab-pane" id="panel-664205">
+                        <div class="accordion" id="accordion-763693">
+                            <div class="accordion-group">
+                                <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-parent="#accordion-763693" data-toggle="collapse" href="#accordion-element-474276">选项卡 #1</a>
+                                </div>
+                                <div class="accordion-body collapse" id="accordion-element-474276">
+                                    <div class="accordion-inner">
+                                        功能块...
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-group">
+                                <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-parent="#accordion-763693" data-toggle="collapse" href="#accordion-element-66206">选项卡 #2</a>
+                                </div>
+                                <div class="accordion-body collapse" id="accordion-element-66206">
+                                    <div class="accordion-inner">
+                                        功能块...
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-group">
+                                <div class="accordion-heading">
+                                    <a class="accordion-toggle" data-parent="#accordion-763693" data-toggle="collapse" href="#accordion-element-66208">选项卡 #3</a>
+                                </div>
+                                <div class="accordion-body collapse" id="accordion-element-66208">
+                                    <div class="accordion-inner">
+                                        功能块...
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-group">
+                                <div class="accordion-heading">
+                                    <a class="accordion-toggle" data-parent="#accordion-763693" data-toggle="collapse" href="#accordion-element-66210">选项卡 #4</a>
+                                </div>
+                                <div class="accordion-body collapse" id="accordion-element-66210">
+                                    <div class="accordion-inner">
+                                        功能块...
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-group">
+                                <div class="accordion-heading">
+                                    <a class="accordion-toggle" data-parent="#accordion-763693" data-toggle="collapse" href="#accordion-element-474278">选项卡 #5</a>
+                                </div>
+                                <div class="accordion-body collapse" id="accordion-element-474278">
+                                    <div class="accordion-inner">
+                                        功能块...
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-group">
+                                <div class="accordion-heading">
+                                    <a class="accordion-toggle" data-parent="#accordion-763693" data-toggle="collapse" href="#accordion-element-66278">选项卡 #6</a>
+                                </div>
+                                <div class="accordion-body collapse" id="accordion-element-66278">
+                                    <div class="accordion-inner">
+                                        功能块...
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-group">
+                                <div class="accordion-heading">
+                                    <a class="accordion-toggle" data-parent="#accordion-763693" data-toggle="collapse" href="#accordion-element-662092">选项卡 #7</a>
+                                </div>
+                                <div class="accordion-body collapse" id="accordion-element-662092">
+                                    <div class="accordion-inner">
+                                        功能块...
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-group">
+                                <div class="accordion-heading">
+                                    <a class="accordion-toggle" data-parent="#accordion-763693" data-toggle="collapse" href="#accordion-element-66211">选项卡 #8</a>
+                                </div>
+                                <div class="accordion-body collapse" id="accordion-element-66211">
+                                    <div class="accordion-inner">
+                                        功能块...
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-group">
+                                <div class="accordion-heading">
+                                    <a class="accordion-toggle" data-parent="#accordion-763693" data-toggle="collapse" href="#accordion-element-662055">选项卡 #9</a>
+                                </div>
+                                <div class="accordion-body collapse" id="accordion-element-662055">
+                                    <div class="accordion-inner">
+                                        功能块...
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-group">
+                                <div class="accordion-heading">
+                                    <a class="accordion-toggle" data-parent="#accordion-763693" data-toggle="collapse" href="#accordion-element-662056">选项卡 #10</a>
+                                </div>
+                                <div class="accordion-body collapse" id="accordion-element-662056">
+                                    <div class="accordion-inner">
+                                        功能块...
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="pagination pagination-centered">
+                            <ul>
+                                <li>
+                                    <a href="#">上一页</a>
+                                </li>
+                                <li>
+                                    <a href="#">1</a>
+                                </li>
+                                <li>
+                                    <a href="#">2</a>
+                                </li>
+                                <li>
+                                    <a href="#">下一页</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="tab-pane active" id="panel-92935">
+                        <div class="accordion" id="accordion-787160">
+                            <div class="accordion-group">
+                                <div class="accordion-heading">
+                                    <a class="accordion-toggle" data-parent="#accordion-787160" data-toggle="collapse" href="#accordion-element-709304">选项卡 #1</a>
+                                </div>
+                                <div class="accordion-body collapse" id="accordion-element-709304">
+                                    <div class="accordion-inner">
+
+                                        <div class="progress progress-striped active progress-info">
+                                            <div class="bar">
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-group">
+                                <div class="accordion-heading">
+                                    <a class="accordion-toggle" data-parent="#accordion-787160" data-toggle="collapse" href="#accordion-element-55209">选项卡 #2</a>
+                                </div>
+                                <div class="accordion-body in collapse" id="accordion-element-55209">
+                                    <div class="accordion-inner">
+
+                                        <div class="progress progress-striped active progress-info">
+                                            <div class="bar">
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="pagination pagination-centered">
+                            <ul>
+                                <li>
+                                    <a href="#">上一页</a>
+                                </li>
+                                <li>
+                                    <a href="#">1</a>
+                                </li>
+                                <li>
+                                    <a href="#">2</a>
+                                </li>
+                                <li>
+                                    <a href="#">下一页</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="span4" style="text-align:center">
+            <img alt = "140*140" src="img/gopher.jpg"  class="img-circle" width="268" height="201" />
+            <h3 class="data" data-text="gopher12345">
+                gopher12345
+            </h3>
+            <h2 style="color:#ffffff;font-size:15px;">
+                <br><br>烹雪煮茶，白首天涯
+                <br>万家灯火，月落归家
+            </h2>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
