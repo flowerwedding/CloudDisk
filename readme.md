@@ -100,4 +100,4 @@ go run main.go
 
 ## 效果图
 
-![1598585254431](D:\GoProjects\src\CloudDisk\view\img\1598585254431.png)
+![1598585254431](https://github.com/flowerwedding/CloudDisk/blob/master/view/img/1598585254431.png)
