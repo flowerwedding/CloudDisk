@@ -16,8 +16,8 @@ import (
 
 // @Summary  登录获取JWT
 // @Produce  json
-// @Param  app_key query string true "Key"
-// @Param  app_secret query string true "Secret"
+// @Param  username query string true "Key"
+// @Param  password query string true "Secret"
 // @Success  200 {object} model.Auth "成功"
 // @Failure  400 {object} errcode.Error "请求错误"
 // @Failure  500 {object} errcode.Error "内部错误"

@@ -41,7 +41,7 @@
     <property name="go.sdk.automatically.set" value="true" />
     <property name="go.tried.to.enable.integration.vgo.integrator" value="true" />
     <property name="go.vendoring.notification.had.been.shown" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../myUtil" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../myBlog" />
     <property name="list.type.of.created.stylesheet" value="CSS" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
@@ -166,26 +166,26 @@
       <screen x="0" y="0" width="1440" height="920" />
     </state>
     <state x="234" y="343" key="EditFileWatcherDialog/0.0.1440.920@0.0.1440.920" timestamp="1596548168269" />
-    <state x="501" y="219" key="FileChooserDialogImpl" timestamp="1598535541052">
+    <state x="501" y="219" key="FileChooserDialogImpl" timestamp="1598606161270">
       <screen x="0" y="0" width="1440" height="920" />
     </state>
-    <state x="501" y="219" key="FileChooserDialogImpl/0.0.1440.920@0.0.1440.920" timestamp="1598535541052" />
-    <state width="1397" height="266" key="GridCell.Tab.0.bottom" timestamp="1598539236619">
+    <state x="501" y="219" key="FileChooserDialogImpl/0.0.1440.920@0.0.1440.920" timestamp="1598606161270" />
+    <state width="1397" height="366" key="GridCell.Tab.0.bottom" timestamp="1598613354237">
       <screen x="0" y="0" width="1440" height="920" />
     </state>
-    <state width="1397" height="266" key="GridCell.Tab.0.bottom/0.0.1440.920@0.0.1440.920" timestamp="1598539236619" />
-    <state width="1397" height="266" key="GridCell.Tab.0.center" timestamp="1598539236619">
+    <state width="1397" height="366" key="GridCell.Tab.0.bottom/0.0.1440.920@0.0.1440.920" timestamp="1598613354237" />
+    <state width="1397" height="366" key="GridCell.Tab.0.center" timestamp="1598613354237">
       <screen x="0" y="0" width="1440" height="920" />
     </state>
-    <state width="1397" height="266" key="GridCell.Tab.0.center/0.0.1440.920@0.0.1440.920" timestamp="1598539236619" />
-    <state width="1397" height="266" key="GridCell.Tab.0.left" timestamp="1598539236619">
+    <state width="1397" height="366" key="GridCell.Tab.0.center/0.0.1440.920@0.0.1440.920" timestamp="1598613354237" />
+    <state width="1397" height="366" key="GridCell.Tab.0.left" timestamp="1598613354236">
       <screen x="0" y="0" width="1440" height="920" />
     </state>
-    <state width="1397" height="266" key="GridCell.Tab.0.left/0.0.1440.920@0.0.1440.920" timestamp="1598539236619" />
-    <state width="1397" height="266" key="GridCell.Tab.0.right" timestamp="1598539236619">
+    <state width="1397" height="366" key="GridCell.Tab.0.left/0.0.1440.920@0.0.1440.920" timestamp="1598613354236" />
+    <state width="1397" height="366" key="GridCell.Tab.0.right" timestamp="1598613354237">
       <screen x="0" y="0" width="1440" height="920" />
     </state>
-    <state width="1397" height="266" key="GridCell.Tab.0.right/0.0.1440.920@0.0.1440.920" timestamp="1598539236619" />
+    <state width="1397" height="366" key="GridCell.Tab.0.right/0.0.1440.920@0.0.1440.920" timestamp="1598613354237" />
     <state width="1397" height="535" key="GridCell.Tab.1.bottom" timestamp="1598354495582">
       <screen x="0" y="0" width="1440" height="920" />
     </state>

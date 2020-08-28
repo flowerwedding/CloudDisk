@@ -53,10 +53,10 @@ func init() {
 	}
 }
 
-// @title  博客后台
+// @title  云盘
 // @version  1.0
-// @description 《Go语言编程之旅》项目练习
-// @termsOfService  https://github.com/flowerwedding/myBlog
+// @description  一个支持一次性快传、断点续传、加密/二维码分享、下载限速、回收文件等多功能的云盘
+// @termsOfService  https://github.com/flowerwedding/CloudDisk
 func main() {
 	gin.SetMode(global.ServerSetting.RunMode)
 	router := routers.NewRouter()

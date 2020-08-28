@@ -15,7 +15,3 @@ var (
 	ErrorDeleteFileFail   = NewError(10015, "删除文件失败")
 	ErrorCountFileFail    = NewError(10016, "统计文件失败")
 )
-
-var (
-	ERROR_UPLOAD_FILE_FAIL = NewError(10031, "上传文件失败")
-)

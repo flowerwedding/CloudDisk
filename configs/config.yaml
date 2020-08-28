@@ -11,7 +11,7 @@ App:
   LogFileExt: .log
   UploadSavePath: storage/uploads
   UploadServerUrl: http://127.0.0.1:8000/static
-  UploadImageMaxSize: 5  # MB
+  UploadImageMaxSize: 10  # MB
   UploadImageAllowExts:
     - .jpg
     - .jpeg

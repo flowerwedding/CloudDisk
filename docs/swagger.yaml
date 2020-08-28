@@ -1,0 +1,468 @@
+definitions:
+  app.Pager:
+    properties:
+      page:
+        type: integer
+      page_size:
+        type: integer
+      total_rows:
+        type: integer
+    type: object
+  app.Response:
+    properties:
+      ctx:
+        type: string
+    type: object
+  errcode.Error:
+    properties:
+      code:
+        type: integer
+      details:
+        items:
+          type: string
+        type: array
+      msg:
+        type: string
+    type: object
+  model.Auth:
+    properties:
+      created_by:
+        type: string
+      created_on:
+        type: integer
+      deleted_on:
+        type: integer
+      id:
+        type: integer
+      is_del:
+        type: integer
+      modified_by:
+        type: string
+      modified_on:
+        type: integer
+      password:
+        type: string
+      username:
+        type: string
+    type: object
+  model.File:
+    properties:
+      created_by:
+        type: string
+      created_on:
+        type: integer
+      deleted_on:
+        type: integer
+      id:
+        type: integer
+      is_del:
+        type: integer
+      modified_by:
+        type: string
+      modified_on:
+        type: integer
+      name:
+        type: string
+      state:
+        type: integer
+      type:
+        type: string
+      url:
+        type: string
+    type: object
+  model.FileSwagger:
+    properties:
+      list:
+        items:
+          $ref: '#/definitions/model.File'
+        type: array
+      pager:
+        $ref: '#/definitions/app.Pager'
+        type: object
+    type: object
+info:
+  contact: {}
+  description: 一个支持一次性快传、断点续传、加密/二维码分享、下载限速、回收文件等多功能的云盘
+  license: {}
+  termsOfService: https://github.com/flowerwedding/CloudDisk
+  title: 云盘
+  version: "1.0"
+paths:
+  /api/v1/file:
+    delete:
+      parameters:
+      - description: 文件名称
+        in: query
+        name: name
+        required: true
+        type: string
+      - description: 文件上传者
+        in: query
+        name: created_by
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 成功
+          schema:
+            type: string
+        "400":
+          description: 请求错误
+          schema:
+            $ref: '#/definitions/errcode.Error'
+        "500":
+          description: 内部错误
+          schema:
+            $ref: '#/definitions/errcode.Error'
+      summary: 文件删除
+    post:
+      parameters:
+      - description: 文件
+        in: body
+        name: file
+        required: true
+        schema:
+          type: string
+      - description: 文件名
+        in: body
+        name: name
+        required: true
+        schema:
+          type: string
+      - description: 类型
+        in: body
+        name: type
+        required: true
+        schema:
+          type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 成功
+          schema:
+            $ref: '#/definitions/app.Response'
+        "400":
+          description: 请求错误
+          schema:
+            $ref: '#/definitions/errcode.Error'
+        "500":
+          description: 内部错误
+          schema:
+            $ref: '#/definitions/errcode.Error'
+      summary: 一次性快传
+  /api/v1/file/Qt:
+    get:
+      parameters:
+      - description: 文件名称
+        in: query
+        name: name
+        required: true
+        type: string
+      - description: 文件上传者
+        in: query
+        name: created_by
+        required: true
+        type: string
+      - default: 1
+        description: 状态
+        enum:
+        - 0
+        - 1
+        in: query
+        name: state
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 成功
+          schema:
+            $ref: '#/definitions/model.FileSwagger'
+        "400":
+          description: 请求错误
+          schema:
+            $ref: '#/definitions/errcode.Error'
+        "500":
+          description: 内部错误
+          schema:
+            $ref: '#/definitions/errcode.Error'
+      summary: 二维码分享链接
+  /api/v1/file/limit:
+    put:
+      parameters:
+      - description: 文件名称
+        in: query
+        name: name
+        required: true
+        type: string
+      - description: 文件上传者
+        in: query
+        name: created_by
+        required: true
+        type: string
+      - default: 1
+        description: 状态
+        enum:
+        - 0
+        - 1
+        in: query
+        name: state
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 成功
+          schema:
+            items:
+              $ref: '#/definitions/model.File'
+            type: array
+        "400":
+          description: 请求错误
+          schema:
+            $ref: '#/definitions/errcode.Error'
+        "500":
+          description: 内部错误
+          schema:
+            $ref: '#/definitions/errcode.Error'
+      summary: 下载限速
+  /api/v1/file/link:
+    get:
+      parameters:
+      - description: 文件名称
+        in: query
+        name: name
+        required: true
+        type: string
+      - description: 文件上传者
+        in: query
+        name: created_by
+        required: true
+        type: string
+      - default: 1
+        description: 状态
+        enum:
+        - 0
+        - 1
+        in: query
+        name: state
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 成功
+          schema:
+            $ref: '#/definitions/model.FileSwagger'
+        "400":
+          description: 请求错误
+          schema:
+            $ref: '#/definitions/errcode.Error'
+        "500":
+          description: 内部错误
+          schema:
+            $ref: '#/definitions/errcode.Error'
+      summary: 加密分享链接
+  /api/v1/file/seek:
+    put:
+      parameters:
+      - description: 文件名称
+        in: query
+        name: name
+        required: true
+        type: string
+      - description: 文件上传者
+        in: query
+        name: created_by
+        required: true
+        type: string
+      - default: 1
+        description: 状态
+        enum:
+        - 0
+        - 1
+        in: query
+        name: state
+        type: integer
+      - description: 文件读取结束位置
+        in: query
+        name: max
+        required: true
+        type: string
+      - default: "0"
+        description: 文件读取起始位置
+        in: query
+        name: min
+        type: string
+      - default: 100
+        description: 文件读取速率
+        in: query
+        name: rate
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 成功
+          schema:
+            items:
+              $ref: '#/definitions/model.File'
+            type: array
+        "400":
+          description: 请求错误
+          schema:
+            $ref: '#/definitions/errcode.Error'
+        "500":
+          description: 内部错误
+          schema:
+            $ref: '#/definitions/errcode.Error'
+      summary: 断点续传
+  /api/v1/list:
+    get:
+      parameters:
+      - description: 文件类型
+        in: query
+        name: type
+        type: string
+      - default: 1
+        description: 状态
+        enum:
+        - 0
+        - 1
+        in: query
+        name: state
+        type: integer
+      - description: 页码
+        in: query
+        name: page
+        type: integer
+      - description: 每页数量
+        in: query
+        name: page_size
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 成功
+          schema:
+            $ref: '#/definitions/model.FileSwagger'
+        "400":
+          description: 请求错误
+          schema:
+            $ref: '#/definitions/errcode.Error'
+        "500":
+          description: 内部错误
+          schema:
+            $ref: '#/definitions/errcode.Error'
+      summary: 文件列表
+  /api/v1/list/delete:
+    get:
+      parameters:
+      - description: 文章类型
+        in: query
+        name: type
+        type: string
+      - default: 1
+        description: 状态
+        enum:
+        - 0
+        - 1
+        in: query
+        name: state
+        type: integer
+      - description: 页码
+        in: query
+        name: page
+        type: integer
+      - description: 每页数量
+        in: query
+        name: page_size
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 成功
+          schema:
+            $ref: '#/definitions/model.FileSwagger'
+        "400":
+          description: 请求错误
+          schema:
+            $ref: '#/definitions/errcode.Error'
+        "500":
+          description: 内部错误
+          schema:
+            $ref: '#/definitions/errcode.Error'
+      summary: 回收站
+  /auth:
+    get:
+      parameters:
+      - description: 验证码ID
+        in: body
+        name: captchaId
+        required: true
+        schema:
+          type: string
+      - description: 验证码内容
+        in: body
+        name: value
+        required: true
+        schema:
+          type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 成功
+          schema:
+            $ref: '#/definitions/string'
+        "400":
+          description: 请求错误
+          schema:
+            $ref: '#/definitions/errcode.Error'
+        "500":
+          description: 内部错误
+          schema:
+            $ref: '#/definitions/errcode.Error'
+      summary: 验证图形验证码
+  /getCaptcha:
+    get:
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 成功
+          schema:
+            $ref: '#/definitions/string'
+        "400":
+          description: 请求错误
+          schema:
+            $ref: '#/definitions/errcode.Error'
+        "500":
+          description: 内部错误
+          schema:
+            $ref: '#/definitions/errcode.Error'
+      summary: 生成图形验证码
+  /show/:source:
+    get:
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 成功
+          schema:
+            $ref: '#/definitions/string'
+        "400":
+          description: 请求错误
+          schema:
+            $ref: '#/definitions/errcode.Error'
+        "500":
+          description: 内部错误
+          schema:
+            $ref: '#/definitions/errcode.Error'
+      summary: 查看图形验证码
+swagger: "2.0"

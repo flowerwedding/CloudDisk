@@ -84,3 +84,12 @@ func (svc *Service) FileDownload(file model.File) (string, error) {
 
 	return fmt.Sprintf("Copied %d bytes in %s\n", n, time.Since(start)), nil
 }
+
+func (svc *Service) FileSeekDown(max string, min string, rate int, file model.File) (string, error) {
+	message, err := upload.SeekDown(max, min, rate, file.Url, file.Name)
+	if err != nil {
+		return "", err
+	}
+
+	return message, nil
+}

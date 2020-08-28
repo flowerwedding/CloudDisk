@@ -8,38 +8,43 @@ package dao
 
 import (
 	"CloudDisk/internal/model"
+	"CloudDisk/pkg/app"
 	"errors"
 )
 
-/*
-func (d *Dao) CountFile(name string, state uint8) (int, error) {
-	file := model.File{Name: name, State: state}
+func (d *Dao) CountFile(user string, a string, state uint8, delete uint32) (int, error) {
+	file := model.File{
+		Model: &model.Model{ModifiedBy: user, DeletedOn: delete},
+		Type:  a,
+		State: state,
+	}
 	return file.Count(d.engine)
-}*/
+}
 
 func (d *Dao) GetFile(name string, createdBy string, state uint8) (model.File, error) {
-	file := model.File{Name: name, Model: &model.Model{CreatedBy: createdBy}, State: state}
+	file := model.File{
+		Name:  name,
+		Model: &model.Model{CreatedBy: createdBy},
+		State: state,
+	}
 	return file.Get(d.engine)
 }
 
-/*
-func (d *Dao) GetFileList(name string, state uint8, page, pageSize int) ([]*model.File, error) {
-	file := model.File{Name: name, State: state}
+func (d *Dao) GetFileList(user string, a string, state uint8, page, pageSize int, delete uint32) ([]*model.File, error) {
+	file := model.File{
+		Model: &model.Model{ModifiedBy: user, DeletedOn: delete},
+		Type:  a,
+		State: state,
+	}
 	pageOffset := app.GetPageOffset(page, pageSize)
 	return file.List(d.engine, pageOffset, pageSize)
 }
 
-func (d *Dao) GetFileListByIDs(ids []uint32, state uint8) ([]*model.File, error) {
-	file := model.File{State: state}
-	return file.ListByIDs(d.engine, ids)
-}
-*/
-//param.Name, param.State, param.CreatedBy, param.Url, param.Type
 func (d *Dao) CreateFile(name string, state uint8, createdBy string, url string, a string) error {
 	file := model.File{
 		Name:  name,
 		State: state,
-		Model: &model.Model{CreatedBy: createdBy},
+		Model: &model.Model{CreatedBy: createdBy, ModifiedBy: createdBy},
 		Url:   url,
 		Type:  a,
 	}
@@ -52,8 +57,22 @@ func (d *Dao) CreateFile(name string, state uint8, createdBy string, url string,
 	return file.Create(d.engine)
 }
 
-/*
-func (d *Dao) DeleteFile(id uint32) error {
-	file := model.File{Model: &model.Model{ID: id}}
+func (d *Dao) CreateFileWithUser(user string, name string, state uint8, createdBy string, url string, a string) error {
+	file := model.File{
+		Name:  name,
+		State: state,
+		Model: &model.Model{CreatedBy: createdBy, ModifiedBy: user},
+		Url:   url,
+		Type:  a,
+	}
+
+	return file.Create(d.engine)
+}
+
+func (d *Dao) DeleteFile(user string, name string, createdBy string) error {
+	file := model.File{
+		Name:  name,
+		Model: &model.Model{CreatedBy: createdBy, ModifiedBy: user},
+	}
 	return file.Delete(d.engine)
-}*/
+}

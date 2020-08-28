@@ -70,7 +70,11 @@ func NewRouter() *gin.Engine {
 		apiv1.POST("/file", file.Create)
 		apiv1.GET("/file/link", file.GetByLink)
 		apiv1.GET("/file/Qt", file.GetByQt)
-		apiv1.GET("/file", file.Download)
+		apiv1.GET("/list", file.List)
+		apiv1.GET("/list/delete", file.ListInDelete)
+		apiv1.PUT("/file/limit", file.DownloadWithLimit)
+		apiv1.PUT("/file/seek", file.DownloadWithSeek)
+		apiv1.DELETE("/file", file.Delete)
 		r.StaticFS("/static", http.Dir(global.AppSetting.UploadSavePath)) //必须有,static URL才能被访问
 	}
 

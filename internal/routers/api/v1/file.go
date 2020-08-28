@@ -27,13 +27,13 @@ func NewFile() File {
 
 // @Summary  加密分享链接
 // @Produce  json
-// @Param  name query int true "文章ID"
-// @Param  created_by query int true "文章ID"
+// @Param  name query string true "文件名称"
+// @Param  created_by query string true "文件上传者"
 // @Param  state query int false "状态" Enums(0, 1) default(1)
-// @Success  200 {object} model.ArticleSwagger "成功"
+// @Success  200 {object} model.FileSwagger "成功"
 // @Failure  400 {object} errcode.Error "请求错误"
 // @Failure  500 {object} errcode.Error "内部错误"
-// @Router  /api/v1/articles/{id} [get]
+// @Router  /api/v1/file/link [get]
 func (f File) GetByLink(c *gin.Context) {
 	param := service.FileRequest{}
 	response := app.NewResponse(c)
@@ -59,13 +59,13 @@ func (f File) GetByLink(c *gin.Context) {
 
 // @Summary  二维码分享链接
 // @Produce  json
-// @Param  name query int true "文章ID"
-// @Param  created_by query int true "文章ID"
+// @Param  name query string true "文件名称"
+// @Param  created_by query string true "文件上传者"
 // @Param  state query int false "状态" Enums(0, 1) default(1)
-// @Success  200 {object} model.ArticleSwagger "成功"
+// @Success  200 {object} model.FileSwagger "成功"
 // @Failure  400 {object} errcode.Error "请求错误"
 // @Failure  500 {object} errcode.Error "内部错误"
-// @Router  /api/v1/articles/{id} [get]
+// @Router  /api/v1/file/Qt [get]
 func (f File) GetByQt(c *gin.Context) {
 	param := service.FileRequest{}
 	response := app.NewResponse(c)
@@ -98,18 +98,17 @@ func (f File) GetByQt(c *gin.Context) {
 	return
 }
 
-/*
 // @Summary  文件列表
 // @Produce  json
-// @Param  tag_id query uint32 true "标签ID"
+// @Param  type query string false "文件类型"
 // @Param  state query int false "状态" Enums(0, 1) default(1)
 // @Param  page query int false "页码"
 // @Param  page_size query int false "每页数量"
-// @Success  200 {object} model.ArticleSwagger "成功"
+// @Success  200 {object} model.FileSwagger "成功"
 // @Failure  400 {object} errcode.Error "请求错误"
 // @Failure  500 {object} errcode.Error "内部错误"
-// @Router  /api/v1/articles [get]
-func (a File) List(c *gin.Context) {
+// @Router  /api/v1/list [get]
+func (f File) List(c *gin.Context) {
 	param := service.FileListRequest{}
 	response := app.NewResponse(c)
 	valid, errs := app.BindAndValid(c, &param)
@@ -119,20 +118,69 @@ func (a File) List(c *gin.Context) {
 		return
 	}
 
+	user, _ := c.Get("user")
 	svc := service.New(c.Request.Context())
-	pager := app.Pager{Page: app.GetPage(c), PageSize: app.GetPageSize(c)}
-	articles, totalRows, err := svc.GetFileList(&param, &pager)
+	rows, err := svc.CountFile(user.(string), &param, 0)
 	if err != nil {
 		global.Logger.Errorf("svc.GetArticleList err: %v", err)
-		response.ToErrorResponse(errcode.ErrorGetArticlesFail)
+		response.ToErrorResponse(errcode.ErrorCountFileFail)
 		return
 	}
 
-	response.ToResponseList(articles, totalRows)
+	pager := app.Pager{Page: app.GetPage(c), PageSize: app.GetPageSize(c)}
+	files, err := svc.GetFileList(user.(string), &param, &pager, 0)
+	if err != nil {
+		global.Logger.Errorf("svc.GetArticleList err: %v", err)
+		response.ToErrorResponse(errcode.ErrorGetFileListFail)
+		return
+	}
+
+	response.ToResponseList(files, rows)
 	return
 }
-*/
-// @Summary  文件一次性快传
+
+// @Summary  回收站
+// @Produce  json
+// @Param  type query string false "文章类型"
+// @Param  state query int false "状态" Enums(0, 1) default(1)
+// @Param  page query int false "页码"
+// @Param  page_size query int false "每页数量"
+// @Success  200 {object} model.FileSwagger "成功"
+// @Failure  400 {object} errcode.Error "请求错误"
+// @Failure  500 {object} errcode.Error "内部错误"
+// @Router  /api/v1/list/delete [get]
+func (f File) ListInDelete(c *gin.Context) {
+	param := service.FileListRequest{}
+	response := app.NewResponse(c)
+	valid, errs := app.BindAndValid(c, &param)
+	if !valid {
+		global.Logger.Errorf("app.BindAndValid errs: %v", errs)
+		response.ToErrorResponse(errcode.InvalidParams.WithDetails(errs.Errors()...))
+		return
+	}
+
+	user, _ := c.Get("user")
+	svc := service.New(c.Request.Context())
+	rows, err := svc.CountFile(user.(string), &param, 1)
+	if err != nil {
+		global.Logger.Errorf("svc.GetArticleList err: %v", err)
+		response.ToErrorResponse(errcode.ErrorCountFileFail)
+		return
+	}
+
+	pager := app.Pager{Page: app.GetPage(c), PageSize: app.GetPageSize(c)}
+	files, err := svc.GetFileList(user.(string), &param, &pager, 1)
+	if err != nil {
+		global.Logger.Errorf("svc.GetArticleList err: %v", err)
+		response.ToErrorResponse(errcode.ErrorGetFileListFail)
+		return
+	}
+
+	response.ToResponseList(files, rows)
+	return
+}
+
+// @Summary  一次性快传
 // @Produce  json
 // @Param  file body string true "文件"
 // @Param  name body string true "文件名"
@@ -140,7 +188,7 @@ func (a File) List(c *gin.Context) {
 // @Success  200 {object} app.Response "成功"
 // @Failure  400 {object} errcode.Error "请求错误"
 // @Failure  500 {object} errcode.Error "内部错误"
-// @Router  /upload/file [post]
+// @Router  /api/v1/file [post]
 func (f File) Create(c *gin.Context) {
 	response := app.NewResponse(c)
 	file, fileHeader, err := c.Request.FormFile("file")
@@ -159,7 +207,7 @@ func (f File) Create(c *gin.Context) {
 	fileInfo, err := svc.UploadFile(upload.FileType(fileType), user.(string), file, fileHeader)
 	if err != nil {
 		global.Logger.Errorf("svc.UploadFile err: %v", err)
-		response.ToErrorResponse(errcode.ERROR_UPLOAD_FILE_FAIL.WithDetails(err.Error()))
+		response.ToErrorResponse(errcode.ErrorCreateFileFail.WithDetails(err.Error()))
 		return
 	}
 
@@ -182,17 +230,16 @@ func (f File) Create(c *gin.Context) {
 	})
 }
 
-// @Summary  文件限速下载
+// @Summary  下载限速
 // @Produce  json
-// @Param  id path int true "标签ID"
-// @Param  name body string false "标签名称" minlength(3) maxlength(100)
-// @Param  state body int false "状态" Enums(0, 1) default(1)
-// @Param  modified_by body string true "修改者" minlength(3) maxlength(100)
-// @Success  200 {array} model.Tag "成功"
+// @Param  name query string true "文件名称"
+// @Param  created_by query string true "文件上传者"
+// @Param  state query int false "状态" Enums(0, 1) default(1)
+// @Success  200 {array} model.File "成功"
 // @Failure  400 {object} errcode.Error "请求错误"
 // @Failure  500 {object} errcode.Error "内部错误"
-// @Router  /api/v1/tags/{id} [put]
-func (f File) Download(c *gin.Context) {
+// @Router  /api/v1/file/limit [put]
+func (f File) DownloadWithLimit(c *gin.Context) {
 	param := service.FileRequest{}
 	response := app.NewResponse(c)
 	valid, errs := app.BindAndValid(c, &param)
@@ -210,6 +257,14 @@ func (f File) Download(c *gin.Context) {
 		return
 	}
 
+	user, _ := c.Get("user")
+	err = svc.CreateFileWithUser(user.(string), &file)
+	if err != nil {
+		global.Logger.Errorf("app.UpdateTag errs: %v", errs)
+		response.ToErrorResponse(errcode.ErrorDownFileFail)
+		return
+	}
+
 	message, err := svc.FileDownload(file)
 	if err != nil {
 		global.Logger.Errorf("app.UpdateTag errs: %v", errs)
@@ -221,16 +276,20 @@ func (f File) Download(c *gin.Context) {
 	return
 }
 
-/*
-// @Summary  文件删除
+// @Summary  断点续传
 // @Produce  json
-// @Param  id query int true "文章ID"
-// @Success  200 {string} string "成功"
+// @Param  name query string true "文件名称"
+// @Param  created_by query string true "文件上传者"
+// @Param  state query int false "状态" Enums(0, 1) default(1)
+// @Param  max query string true "文件读取结束位置"
+// @Param  min query string false "文件读取起始位置" default(0)
+// @Param  rate query int false "文件读取速率" default(100)
+// @Success  200 {array} model.File "成功"
 // @Failure  400 {object} errcode.Error "请求错误"
-// @Failure  500 {object} errcode.Error "内部错误""
-// @Router  /api/v1/articles/{id} [delete]
-func (a File) Delete(c *gin.Context) {
-	param := service.DeleteFileRequest{ID: convert.StrTo(c.Param("id")).MustUInt32()}
+// @Failure  500 {object} errcode.Error "内部错误"
+// @Router  /api/v1/file/seek [put]
+func (f File) DownloadWithSeek(c *gin.Context) {
+	param := service.FileSeekRequest{}
 	response := app.NewResponse(c)
 	valid, errs := app.BindAndValid(c, &param)
 	if !valid {
@@ -240,14 +299,63 @@ func (a File) Delete(c *gin.Context) {
 	}
 
 	svc := service.New(c.Request.Context())
-	err := svc.DeleteFile(&param)
+	file, err := svc.GetFile(&service.FileRequest{
+		Name:      param.Name,
+		CreatedBy: param.CreatedBy,
+		State:     param.State,
+	})
 	if err != nil {
-		global.Logger.Errorf("svc.DeleteArticle err: %v", err)
-		response.ToErrorResponse(errcode.ErrorDeleteArticleFail)
+		global.Logger.Errorf("app.UpdateTag errs: %v", errs)
+		response.ToErrorResponse(errcode.ErrorDownFileFail)
 		return
 	}
 
-	response.ToResponse(gin.H{})
+	user, _ := c.Get("user")
+	err = svc.CreateFileWithUser(user.(string), &file)
+	if err != nil {
+		global.Logger.Errorf("app.UpdateTag errs: %v", errs)
+		response.ToErrorResponse(errcode.ErrorDownFileFail)
+		return
+	}
+
+	message, err := svc.FileSeekDown(param.Max, param.Min, param.Rate, file)
+	if err != nil {
+		global.Logger.Errorf("app.UpdateTag errs: %v", errs)
+		response.ToErrorResponse(errcode.ErrorDownFileFail)
+		return
+	}
+
+	response.ToResponse(gin.H{"message": message, "status": "下载成功"})
 	return
 }
-*/
+
+// @Summary  文件删除
+// @Produce  json
+// @Param  name query string true "文件名称"
+// @Param  created_by query string true "文件上传者"
+// @Success  200 {string} string "成功"
+// @Failure  400 {object} errcode.Error "请求错误"
+// @Failure  500 {object} errcode.Error "内部错误""
+// @Router  /api/v1/file [delete]
+func (f File) Delete(c *gin.Context) {
+	param := service.DeleteFileRequest{}
+	response := app.NewResponse(c)
+	valid, errs := app.BindAndValid(c, &param)
+	if !valid {
+		global.Logger.Errorf("app.BindAndValid errs: %v", errs)
+		response.ToErrorResponse(errcode.InvalidParams.WithDetails(errs.Errors()...))
+		return
+	}
+
+	svc := service.New(c.Request.Context())
+	user, _ := c.Get("user")
+	err := svc.DeleteFile(user.(string), &param)
+	if err != nil {
+		global.Logger.Errorf("svc.DeleteArticle err: %v", err)
+		response.ToErrorResponse(errcode.ErrorDeleteFileFail)
+		return
+	}
+
+	response.ToResponse(gin.H{"message": "删除成功"})
+	return
+}

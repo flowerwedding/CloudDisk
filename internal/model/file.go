@@ -8,6 +8,7 @@ package model
 
 import (
 	"CloudDisk/pkg/app"
+	"fmt"
 	"github.com/jinzhu/gorm"
 )
 
@@ -30,12 +31,12 @@ type FileSwagger struct {
 
 func (f File) Count(db *gorm.DB) (int, error) {
 	var count int
-	if f.Name != "" {
-		//别忘 ? 不然sql语句会拼接错误
-		db = db.Where("name = ?", f.Name)
+	if f.Type != "" {
+		db = db.Where("type = ?", f.Type)
 	}
+	db = db.Where("modified_by = ?", f.ModifiedBy)
 	db = db.Where("state = ?", f.State)
-	if err := db.Model(&f).Where("is_del = ?", 0).Count(&count).Error; err != nil {
+	if err := db.Model(&f).Where("is_del = ?", f.DeletedOn).Count(&count).Error; err != nil {
 		return 0, err
 	}
 	return count, nil
@@ -47,23 +48,14 @@ func (f File) List(db *gorm.DB, pageOffSet, pageSize int) ([]*File, error) {
 	if pageOffSet >= 0 && pageSize > 0 {
 		db = db.Offset(pageOffSet).Limit(pageSize)
 	}
-	if f.Name != "" {
-		db = db.Where("name = ?", f.Name)
+	if f.Type != "" {
+		db = db.Where("type = ?", f.Type)
 	}
+	db = db.Where("modified_by = ?", f.ModifiedBy)
 	db = db.Where("state = ?", f.State)
-	if err = db.Where("is_del = ?", 0).Find(&files).Error; err != nil {
+	if err = db.Where("is_del = ?", f.DeletedOn).Find(&files).Error; err != nil {
 		return nil, err
 	}
-	return files, nil
-}
-
-func (f File) ListByIDs(db *gorm.DB, ids []uint32) ([]*File, error) {
-	var files []*File
-	err := db.Where("state = ? AND is_del = ?", f.State, 0).Where("id IN (?)", ids).Find(&files).Error
-	if err != nil && err != gorm.ErrRecordNotFound {
-		return nil, err
-	}
-
 	return files, nil
 }
 
@@ -81,13 +73,7 @@ func (f File) Create(db *gorm.DB) error {
 	return db.Create(&f).Error
 }
 
-func (f File) Update(db *gorm.DB, values interface{}) error {
-	if err := db.Model(f).Updates(values).Where("id = ? AND is_del = ?", f.ID, 0).Error; err != nil {
-		return err
-	}
-	return nil
-}
-
 func (f File) Delete(db *gorm.DB) error {
-	return db.Where("id = ? AND is_del = ?", f.Model.ID, 0).Delete(&f).Error
+	fmt.Println(f.ModifiedBy)
+	return db.Where("name = ? AND created_by = ? AND is_del = ? AND modified_by = ?", f.Name, f.CreatedBy, 0, f.ModifiedBy).Delete(&f).Error
 }

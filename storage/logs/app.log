@@ -10,3 +10,15 @@
 2020/08/26 17:14:39 {"callers":["D:/GoProjects/src/CloudDisk/main.go: 46 main.init.0"],"level":"error","message":"app.CreateTag errs: this file is exist","time":1598433279322904500}
 2020/08/26 17:26:30 {"callers":["D:/GoProjects/src/CloudDisk/main.go: 46 main.init.0"],"level":"error","message":"app.CreateTag errs: this file is exist","time":1598433990952510900}
 2020/08/27 20:26:11 {"callers":["D:/GoProjects/src/CloudDisk/main.go: 46 main.init.0"],"level":"error","message":"app.BindAndValid errs: CreatedBy为必填字段","time":1598531171492806800}
+2020/08/28 16:48:03 {"callers":["D:/GoProjects/src/CloudDisk/main.go: 46 main.init.0"],"level":"error","message":"app.UpdateTag errs: ","time":1598604483747926400}
+2020/08/28 16:50:01 {"callers":["D:/GoProjects/src/CloudDisk/main.go: 46 main.init.0"],"level":"error","message":"app.UpdateTag errs: ","time":1598604601529472900}
+2020/08/28 16:52:24 {"callers":["D:/GoProjects/src/CloudDisk/main.go: 46 main.init.0"],"level":"error","message":"app.UpdateTag errs: ","time":1598604744336038300}
+2020/08/28 16:54:17 {"callers":["D:/GoProjects/src/CloudDisk/main.go: 46 main.init.0"],"level":"error","message":"app.UpdateTag errs: ","time":1598604857438224800}
+2020/08/28 16:56:02 {"callers":["D:/GoProjects/src/CloudDisk/main.go: 46 main.init.0"],"level":"error","message":"app.Update errs: ","time":1598604962931662700}
+2020/08/28 16:57:00 {"callers":["D:/GoProjects/src/CloudDisk/main.go: 46 main.init.0"],"level":"error","message":"app.Update errs: ","time":1598605020063152700}
+2020/08/28 16:57:51 {"callers":["D:/GoProjects/src/CloudDisk/main.go: 46 main.init.0"],"level":"error","message":"app.Update errs: ","time":1598605071868251800}
+2020/08/28 16:58:50 {"callers":["D:/GoProjects/src/CloudDisk/main.go: 46 main.init.0"],"level":"error","message":"app.Update errs: ","time":1598605130948810400}
+2020/08/28 17:04:16 {"callers":["D:/GoProjects/src/CloudDisk/main.go: 46 main.init.0"],"level":"error","message":"app.UpdateTag errs: ","time":1598605456167926500}
+2020/08/28 17:06:03 {"callers":["D:/GoProjects/src/CloudDisk/main.go: 46 main.init.0"],"level":"error","message":"app.Update errs: ","time":1598605563732552700}
+2020/08/28 17:06:39 {"callers":["D:/GoProjects/src/CloudDisk/main.go: 46 main.init.0"],"level":"error","message":"app.Update errs: ","time":1598605599451036000}
+2020/08/28 17:43:26 {"callers":["D:/GoProjects/src/CloudDisk/main.go: 46 main.init.0"],"level":"error","message":"svc.UploadFile err: exceeded maximum file limit","time":1598607806280742000}
